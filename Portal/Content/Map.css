@@ -1,0 +1,307 @@
+﻿#map {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #EEE;;
+}
+
+#map img {
+    max-width: none;
+}
+
+.info-pane {
+    position: absolute;
+    background-color: #fff;
+
+    left: 0;
+    top: 0;
+    margin-left: -370px;
+    height: 100%;
+    width: 370px;
+    transition: margin-left .3s ease;
+}
+
+.info-pane[visible]{
+    margin-left: 0;
+}
+
+.info-pane > .toggle-button {
+    cursor: pointer;
+    position: absolute;
+    background-color: #fff;
+    padding: 40px 10px;
+    left: 100%;
+    top: 75px;
+    transition: top .3s ease;
+}
+
+.info-pane[visible] > .toggle-button {
+    top: 0;
+}
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
+.info-pane > .toggle-button:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e080";
+}
+
+.info-pane[visible] > .toggle-button:after{
+    font-family: 'Glyphicons Halflings';
+    content: "\e079";
+}
+
+.info-pane > .content {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+.info-pane > .content .location-img{
+    position: relative;
+    height: 300px;
+    width: 100%;
+    border: none;
+}
+
+.info-pane > .content .location-img > img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.info-pane > .content .location-info {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    overflow: auto;
+}
+
+.info-pane > .content .location-info > div[contenteditable='true']{
+    border: 1px solid #DDD;
+    border-radius: 3px;
+}
+
+.info-pane > .content .location-info .name {
+    font-size: 20px;
+}
+
+.info-pane > .content .location-info .code {
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+.info-pane > .content .location-info .description {
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+.info-pane > .content .button-group {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.info-pane > .content button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #DDD;
+    padding: 10px;
+}
+
+.info-pane > .content button:hover {
+    color: #000;
+}
+
+.info-pane > .content .edit-button:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\270f";
+}
+
+.info-pane > .content .save-button:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e172";
+}
+
+.info-pane > .content .cancel-button:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e014";
+}
+
+.search-control {
+    top: 0;
+    left: 0;
+    max-width: 350px;
+    width: 350px;
+    position: absolute;
+    margin: 10px;
+    padding: 0;
+    box-shadow: 0 2px 20px -4px rgba(0,0,0,.5);
+    border-radius: 3px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.omnibox {
+    display: flex;
+    align-content: flex-start; 
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    width: auto;
+    margin: 0;
+    padding: 8px;
+    background-color: #fff;
+}
+
+.omnibox * {
+    padding: 0px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 15px;
+    margin: auto;
+}
+
+.omnibox-search-input:focus {
+    outline: none;
+}
+
+.omnibox-search-input {
+    flex-grow: 1;
+    border: none;
+}
+
+.omnibox button {
+    flex: none;
+    color: #999;
+    display: inline-block;
+    background-color: #fff;
+    border: none;
+    padding: 0 20px;
+}
+
+.omnibox button:focus {
+    outline: none;
+}
+
+.omnibox button.border-right {
+    border-right: 1px solid #999;
+}
+
+.omnibox-suggestions {
+    height: auto;
+    width: 100%;
+    bottom: 0;
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    border-top: 1px solid #EEE;
+    background-color: #fff;
+}
+
+.omnibox-suggestions > ul {
+    padding: 0;
+    margin: 0;
+}
+
+.omnibox-suggestions > ul > li {
+    cursor: pointer;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 13px;
+    padding: 13px 0;
+}
+
+.omnibox-suggestions > ul > li .icon {
+    color: #AAA;
+    line-height: 20px;
+    height: 20px;
+    padding-left: 20px;
+}
+
+.omnibox-suggestions > ul > li .row-label {
+    color: #555;
+    line-height: 20px;
+    height: 20px;
+    padding-left: 20px;
+}
+.omnibox-suggestions > ul > li:hover {
+    background-color: #F5F5F5;
+}
+
+.omnibox-suggestions > ul > li~li {
+    border-top: 1px solid #EEE;
+}
+
+.map-utils_delete-menu {
+    position: absolute;
+    background: white;
+    padding: 3px;
+    color: #666;
+    font-weight: bold;
+    border: 1px solid #999;
+    font-family: sans-serif;
+    font-size: 12px;
+    box-shadow: 1px 3px 3px rgba(0, 0, 0, .3);
+    margin-top: -10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.map-utils_delete-menu:hover {
+    background: #eee;
+}
+
+.person-marker {
+    border: 2px solid white;
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    width: 16px;
+    height: 16px;
+    background-color: royalblue;
+    border-radius: 25px;
+    box-shadow: rgba(66, 133, 244, 0.247059) 0px 0px 0px 4px;
+}
+
+.loading-icon-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.loading-icon-container > img {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
+}

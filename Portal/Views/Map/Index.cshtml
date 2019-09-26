@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Map";
+    var canEdit = (bool)ViewBag.CanEdit;
+    var locationCode = (string)ViewBag.LocationCode;
+}
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/PromiseHttp.js")
+    @Scripts.Render("~/Scripts/templates.js")
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFXQMWdzcAExWLkljzYCnfKOdwwa2mM8E"></script>
+    @Scripts.Render("~/Scripts/Maps/MapUtils.js")
+
+    <script>
+        var defaultLocCode = @Html.Raw(Json.Encode(locationCode));
+        var baseUrl = @Html.Raw(Json.Encode(Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~")));
+        var canEdit = @Html.Raw(Json.Encode(canEdit));
+        var loadingIcon = @Html.Raw(Json.Encode(Url.Content("~/Content/Images/loading_charmander.gif")));
+    </script>
+    @Scripts.Render("~/Scripts/Maps/Map.js")
+}
+
+@section head
+{
+    @Styles.Render("~/Content/Map.css")
+}
+<div id="map">
+</div>
+

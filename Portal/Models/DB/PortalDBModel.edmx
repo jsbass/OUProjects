@@ -1,0 +1,900 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_109670_portalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Building">
+          <Key>
+            <PropertyRef Name="fkLocationId" />
+          </Key>
+          <Property Name="BuildingCode" Type="varchar" MaxLength="20" />
+          <Property Name="GeoData" Type="varchar(max)" />
+          <Property Name="fkLocationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="150" />
+          <Property Name="UserId" Type="varchar" MaxLength="15" />
+          <Property Name="Global" Type="bit" />
+        </EntityType>
+        <EntityType Name="Link">
+          <Key>
+            <PropertyRef Name="LinkId" />
+          </Key>
+          <Property Name="LinkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="150" />
+          <Property Name="Url" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="InNewWindow" Type="bit" />
+        </EntityType>
+        <EntityType Name="LinkCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="LinkId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="LinkId" Type="int" Nullable="false" />
+          <Property Name="Rank" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LinkTag">
+          <Key>
+            <PropertyRef Name="TagId" />
+            <PropertyRef Name="LinkId" />
+          </Key>
+          <Property Name="TagId" Type="int" Nullable="false" />
+          <Property Name="LinkId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MarkerData" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="GeoData" Type="varchar(max)" />
+          <Property Name="ImgUrl" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="OuMapDumpBuilding">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="loctitle" Type="varchar" MaxLength="100" />
+          <Property Name="loccode" Type="varchar" MaxLength="50" />
+          <Property Name="loctext" Type="varchar(max)" />
+          <Property Name="lockeys" Type="varchar(max)" />
+          <Property Name="locimg" Type="varchar" MaxLength="100" />
+          <Property Name="locid" Type="varchar" MaxLength="100" />
+          <Property Name="locurl" Type="varchar" MaxLength="100" />
+          <Property Name="locoptions" Type="varchar(max)" />
+          <Property Name="geodata" Type="varchar(max)" />
+          <Property Name="accessibility" Type="varchar(max)" />
+          <Property Name="floorplan" Type="varchar" MaxLength="250" />
+          <Property Name="displayAs" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="OuMapDumpParking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="loctitle" Type="varchar" MaxLength="100" />
+          <Property Name="loccode" Type="varchar" MaxLength="50" />
+          <Property Name="loctext" Type="varchar(max)" />
+          <Property Name="lockeys" Type="varchar(max)" />
+          <Property Name="locimg" Type="varchar" MaxLength="100" />
+          <Property Name="locid" Type="varchar" MaxLength="20" />
+          <Property Name="locurl" Type="varchar" MaxLength="100" />
+          <Property Name="locoptions" Type="varchar(max)" />
+          <Property Name="geodata" Type="varchar(max)" />
+          <Property Name="isparking" Type="bit" />
+          <Property Name="handicappedcount" Type="varchar" MaxLength="10" />
+          <Property Name="spacecount" Type="varchar" MaxLength="10" />
+          <Property Name="parkingtypes" Type="varchar(max)" />
+          <Property Name="displayAs" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Parking">
+          <Key>
+            <PropertyRef Name="fkLocationId" />
+          </Key>
+          <Property Name="GeoData" Type="varchar(max)" />
+          <Property Name="ParkingCode" Type="varchar" MaxLength="20" />
+          <Property Name="SpaceCount" Type="int" Nullable="false" />
+          <Property Name="HandicapCount" Type="int" Nullable="false" />
+          <Property Name="fkLocationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParkingParkingType">
+          <Key>
+            <PropertyRef Name="ParkingId" />
+            <PropertyRef Name="ParkingTypeName" />
+          </Key>
+          <Property Name="ParkingId" Type="int" Nullable="false" />
+          <Property Name="ParkingTypeName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParkingType">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="TagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="10" />
+          <Property Name="LastName" Type="varchar" MaxLength="10" />
+          <Property Name="PasswordHash" Type="varchar" MaxLength="72" Nullable="false" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="SecurityStamp" Type="varchar" MaxLength="72" />
+        </EntityType>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="ClaimType" Type="varchar(max)" />
+          <Property Name="ClaimValue" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Building_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Building" Type="Self.Building" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Building">
+              <PropertyRef Name="fkLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LinkCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="LinkCategory" Type="Self.LinkCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="LinkCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LinkCategory_Link">
+          <End Role="Link" Type="Self.Link" Multiplicity="1" />
+          <End Role="LinkCategory" Type="Self.LinkCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Link">
+              <PropertyRef Name="LinkId" />
+            </Principal>
+            <Dependent Role="LinkCategory">
+              <PropertyRef Name="LinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LinkTag_Link">
+          <End Role="Link" Type="Self.Link" Multiplicity="1" />
+          <End Role="LinkTag" Type="Self.LinkTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Link">
+              <PropertyRef Name="LinkId" />
+            </Principal>
+            <Dependent Role="LinkTag">
+              <PropertyRef Name="LinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LinkTag_Tag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="LinkTag" Type="Self.LinkTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="LinkTag">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parking_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="Parking" Type="Self.Parking" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parking">
+              <PropertyRef Name="fkLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParkingParkingType_Parking1">
+          <End Role="Parking" Type="Self.Parking" Multiplicity="1" />
+          <End Role="ParkingParkingType" Type="Self.ParkingParkingType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parking">
+              <PropertyRef Name="fkLocationId" />
+            </Principal>
+            <Dependent Role="ParkingParkingType">
+              <PropertyRef Name="ParkingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParkingParkingType_ParkingType">
+          <End Role="ParkingType" Type="Self.ParkingType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ParkingParkingType" Type="Self.ParkingParkingType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParkingType">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="ParkingParkingType">
+              <PropertyRef Name="ParkingTypeName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaim_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserClaim" Type="Self.UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_109670_portalModelStoreContainer">
+          <EntitySet Name="Building" EntityType="Self.Building" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Link" EntityType="Self.Link" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LinkCategory" EntityType="Self.LinkCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LinkTag" EntityType="Self.LinkTag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OuMapDumpBuilding" EntityType="Self.OuMapDumpBuilding" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OuMapDumpParking" EntityType="Self.OuMapDumpParking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parking" EntityType="Self.Parking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParkingParkingType" EntityType="Self.ParkingParkingType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParkingType" EntityType="Self.ParkingType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserClaim" EntityType="Self.UserClaim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Building_Location" Association="Self.FK_Building_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Building" EntitySet="Building" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_User" Association="Self.FK_Category_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LinkCategory_Category" Association="Self.FK_LinkCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="LinkCategory" EntitySet="LinkCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LinkCategory_Link" Association="Self.FK_LinkCategory_Link">
+            <End Role="Link" EntitySet="Link" />
+            <End Role="LinkCategory" EntitySet="LinkCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LinkTag_Link" Association="Self.FK_LinkTag_Link">
+            <End Role="Link" EntitySet="Link" />
+            <End Role="LinkTag" EntitySet="LinkTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LinkTag_Tag" Association="Self.FK_LinkTag_Tag">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="LinkTag" EntitySet="LinkTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parking_Location" Association="Self.FK_Parking_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Parking" EntitySet="Parking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParkingParkingType_Parking1" Association="Self.FK_ParkingParkingType_Parking1">
+            <End Role="Parking" EntitySet="Parking" />
+            <End Role="ParkingParkingType" EntitySet="ParkingParkingType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParkingParkingType_ParkingType" Association="Self.FK_ParkingParkingType_ParkingType">
+            <End Role="ParkingType" EntitySet="ParkingType" />
+            <End Role="ParkingParkingType" EntitySet="ParkingParkingType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaim_User" Association="Self.FK_UserClaim_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserClaim" EntitySet="UserClaim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_109670_portalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="DB_109670_portalModel.UserRole" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Categories" EntityType="DB_109670_portalModel.Category" />
+          <EntitySet Name="Links" EntityType="DB_109670_portalModel.Link" />
+          <EntitySet Name="LinkCategories" EntityType="DB_109670_portalModel.LinkCategory" />
+          <EntitySet Name="Tags" EntityType="DB_109670_portalModel.Tag" />
+          <EntitySet Name="Users" EntityType="DB_109670_portalModel.User" />
+          <AssociationSet Name="FK_Category_User" Association="DB_109670_portalModel.FK_Category_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LinkCategory_Category" Association="DB_109670_portalModel.FK_LinkCategory_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="LinkCategory" EntitySet="LinkCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LinkCategory_Link" Association="DB_109670_portalModel.FK_LinkCategory_Link">
+            <End Role="Link" EntitySet="Links" />
+            <End Role="LinkCategory" EntitySet="LinkCategories" />
+          </AssociationSet>
+          <AssociationSet Name="LinkTag" Association="DB_109670_portalModel.LinkTag">
+            <End Role="Link" EntitySet="Links" />
+            <End Role="Tag" EntitySet="Tags" />
+          </AssociationSet>
+          <AssociationSet Name="UserRole" Association="DB_109670_portalModel.UserRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="UserClaims" EntityType="DB_109670_portalModel.UserClaim" />
+          <AssociationSet Name="FK_UserClaim_User" Association="DB_109670_portalModel.FK_UserClaim_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserClaim" EntitySet="UserClaims" />
+          </AssociationSet>
+          <EntitySet Name="OuMapDumpBuildings" EntityType="DB_109670_portalModel.OuMapDumpBuilding" />
+          <EntitySet Name="OuMapDumpParkings" EntityType="DB_109670_portalModel.OuMapDumpParking" />
+          <EntitySet Name="Buildings" EntityType="DB_109670_portalModel.Building" />
+          <EntitySet Name="Parkings" EntityType="DB_109670_portalModel.Parking" />
+          <EntitySet Name="ParkingTypes" EntityType="DB_109670_portalModel.ParkingType" />
+          <AssociationSet Name="ParkingParkingType" Association="DB_109670_portalModel.ParkingParkingType">
+            <End Role="Parking" EntitySet="Parkings" />
+            <End Role="ParkingType" EntitySet="ParkingTypes" />
+          </AssociationSet>
+          <EntitySet Name="Locations" EntityType="DB_109670_portalModel.Location" />
+          <AssociationSet Name="FK_Building_Location" Association="DB_109670_portalModel.FK_Building_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Building" EntitySet="Buildings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parking_Location" Association="DB_109670_portalModel.FK_Parking_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Parking" EntitySet="Parkings" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="DB_109670_portalModel.FK_Category_User" FromRole="Category" ToRole="User" />
+          <NavigationProperty Name="LinkCategories" Relationship="DB_109670_portalModel.FK_LinkCategory_Category" FromRole="Category" ToRole="LinkCategory" />
+          <Property Name="Global" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Link">
+          <Key>
+            <PropertyRef Name="LinkId" />
+          </Key>
+          <Property Name="LinkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="InNewWindow" Type="Boolean" />
+          <NavigationProperty Name="LinkCategories" Relationship="DB_109670_portalModel.FK_LinkCategory_Link" FromRole="Link" ToRole="LinkCategory" />
+          <NavigationProperty Name="Tags" Relationship="DB_109670_portalModel.LinkTag" FromRole="Link" ToRole="Tag" />
+        </EntityType>
+        <EntityType Name="LinkCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="LinkId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="LinkId" Type="Int32" Nullable="false" />
+          <Property Name="Rank" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="DB_109670_portalModel.FK_LinkCategory_Category" FromRole="LinkCategory" ToRole="Category" />
+          <NavigationProperty Name="Link" Relationship="DB_109670_portalModel.FK_LinkCategory_Link" FromRole="LinkCategory" ToRole="Link" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="TagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Links" Relationship="DB_109670_portalModel.LinkTag" FromRole="Tag" ToRole="Link" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="72" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Categories" Relationship="DB_109670_portalModel.FK_Category_User" FromRole="User" ToRole="Category" />
+          <NavigationProperty Name="Roles" Relationship="DB_109670_portalModel.UserRole" FromRole="User" ToRole="Role" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="72" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserClaims" Relationship="DB_109670_portalModel.FK_UserClaim_User" FromRole="User" ToRole="UserClaim" />
+        </EntityType>
+        <Association Name="FK_Category_User">
+          <End Type="DB_109670_portalModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DB_109670_portalModel.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LinkCategory_Category">
+          <End Type="DB_109670_portalModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="DB_109670_portalModel.LinkCategory" Role="LinkCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="LinkCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LinkCategory_Link">
+          <End Type="DB_109670_portalModel.Link" Role="Link" Multiplicity="1" />
+          <End Type="DB_109670_portalModel.LinkCategory" Role="LinkCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Link">
+              <PropertyRef Name="LinkId" />
+            </Principal>
+            <Dependent Role="LinkCategory">
+              <PropertyRef Name="LinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LinkTag">
+          <End Type="DB_109670_portalModel.Link" Role="Link" Multiplicity="*" />
+          <End Type="DB_109670_portalModel.Tag" Role="Tag" Multiplicity="*" />
+        </Association>
+        <Association Name="UserRole">
+          <End Type="DB_109670_portalModel.Role" Role="Role" Multiplicity="*" />
+          <End Type="DB_109670_portalModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="DB_109670_portalModel.FK_UserClaim_User" FromRole="UserClaim" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserClaim_User">
+          <End Type="DB_109670_portalModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_109670_portalModel.UserClaim" Role="UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OuMapDumpBuilding">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="loctitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="loccode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="loctext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="lockeys" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="locimg" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="locid" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="locurl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="locoptions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="geodata" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="accessibility" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="floorplan" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="displayAs" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="OuMapDumpParking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="loctitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="loccode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="loctext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="lockeys" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="locimg" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="locid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="locurl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="locoptions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="geodata" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isparking" Type="Boolean" />
+          <Property Name="handicappedcount" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="spacecount" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="parkingtypes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="displayAs" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Building">
+          <Key>
+            <PropertyRef Name="fkLocationId" />
+          </Key>
+          <Property Name="BuildingCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="GeoData" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="fkLocationId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Location" Relationship="DB_109670_portalModel.FK_Building_Location" FromRole="Building" ToRole="Location" />
+        </EntityType>
+        <EntityType Name="Parking">
+          <Key>
+            <PropertyRef Name="fkLocationId" />
+          </Key>
+          <Property Name="GeoData" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ParkingCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SpaceCount" Type="Int32" Nullable="false" />
+          <Property Name="HandicapCount" Type="Int32" Nullable="false" />
+          <Property Name="fkLocationId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ParkingTypes" Relationship="DB_109670_portalModel.ParkingParkingType" FromRole="Parking" ToRole="ParkingType" />
+          <NavigationProperty Name="Location" Relationship="DB_109670_portalModel.FK_Parking_Location" FromRole="Parking" ToRole="Location" />
+        </EntityType>
+        <EntityType Name="ParkingType">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Parkings" Relationship="DB_109670_portalModel.ParkingParkingType" FromRole="ParkingType" ToRole="Parking" />
+        </EntityType>
+        <Association Name="ParkingParkingType">
+          <End Type="DB_109670_portalModel.Parking" Role="Parking" Multiplicity="*" />
+          <End Type="DB_109670_portalModel.ParkingType" Role="ParkingType" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MarkerData" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="GeoData" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ImgUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Building" Relationship="DB_109670_portalModel.FK_Building_Location" FromRole="Location" ToRole="Building" />
+          <NavigationProperty Name="Parking" Relationship="DB_109670_portalModel.FK_Parking_Location" FromRole="Location" ToRole="Parking" />
+        </EntityType>
+        <Association Name="FK_Building_Location">
+          <End Type="DB_109670_portalModel.Location" Role="Location" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_109670_portalModel.Building" Role="Building" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Building">
+              <PropertyRef Name="fkLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parking_Location">
+          <End Type="DB_109670_portalModel.Location" Role="Location" Multiplicity="1" />
+          <End Type="DB_109670_portalModel.Parking" Role="Parking" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parking">
+              <PropertyRef Name="fkLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_109670_portalModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Global" ColumnName="Global" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Links">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.Link">
+              <MappingFragment StoreEntitySet="Link">
+                <ScalarProperty Name="InNewWindow" ColumnName="InNewWindow" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LinkId" ColumnName="LinkId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LinkCategories">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.LinkCategory">
+              <MappingFragment StoreEntitySet="LinkCategory">
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="LinkId" ColumnName="LinkId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.Tag">
+              <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="LinkTag" TypeName="DB_109670_portalModel.LinkTag" StoreEntitySet="LinkTag">
+            <EndProperty Name="Tag">
+              <ScalarProperty Name="TagId" ColumnName="TagId" />
+            </EndProperty>
+            <EndProperty Name="Link">
+              <ScalarProperty Name="LinkId" ColumnName="LinkId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserRole" TypeName="DB_109670_portalModel.UserRole" StoreEntitySet="UserRole">
+            <EndProperty Name="User">
+              <ScalarProperty Name="UserId" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="Role">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="UserClaims">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.UserClaim">
+              <MappingFragment StoreEntitySet="UserClaim">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OuMapDumpBuildings">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.OuMapDumpBuilding">
+              <MappingFragment StoreEntitySet="OuMapDumpBuilding">
+                <ScalarProperty Name="displayAs" ColumnName="displayAs" />
+                <ScalarProperty Name="floorplan" ColumnName="floorplan" />
+                <ScalarProperty Name="accessibility" ColumnName="accessibility" />
+                <ScalarProperty Name="geodata" ColumnName="geodata" />
+                <ScalarProperty Name="locoptions" ColumnName="locoptions" />
+                <ScalarProperty Name="locurl" ColumnName="locurl" />
+                <ScalarProperty Name="locid" ColumnName="locid" />
+                <ScalarProperty Name="locimg" ColumnName="locimg" />
+                <ScalarProperty Name="lockeys" ColumnName="lockeys" />
+                <ScalarProperty Name="loctext" ColumnName="loctext" />
+                <ScalarProperty Name="loccode" ColumnName="loccode" />
+                <ScalarProperty Name="loctitle" ColumnName="loctitle" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OuMapDumpParkings">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.OuMapDumpParking">
+              <MappingFragment StoreEntitySet="OuMapDumpParking">
+                <ScalarProperty Name="displayAs" ColumnName="displayAs" />
+                <ScalarProperty Name="parkingtypes" ColumnName="parkingtypes" />
+                <ScalarProperty Name="spacecount" ColumnName="spacecount" />
+                <ScalarProperty Name="handicappedcount" ColumnName="handicappedcount" />
+                <ScalarProperty Name="isparking" ColumnName="isparking" />
+                <ScalarProperty Name="geodata" ColumnName="geodata" />
+                <ScalarProperty Name="locoptions" ColumnName="locoptions" />
+                <ScalarProperty Name="locurl" ColumnName="locurl" />
+                <ScalarProperty Name="locid" ColumnName="locid" />
+                <ScalarProperty Name="locimg" ColumnName="locimg" />
+                <ScalarProperty Name="lockeys" ColumnName="lockeys" />
+                <ScalarProperty Name="loctext" ColumnName="loctext" />
+                <ScalarProperty Name="loccode" ColumnName="loccode" />
+                <ScalarProperty Name="loctitle" ColumnName="loctitle" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Buildings">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.Building">
+              <MappingFragment StoreEntitySet="Building">
+                <ScalarProperty Name="fkLocationId" ColumnName="fkLocationId" />
+                <ScalarProperty Name="GeoData" ColumnName="GeoData" />
+                <ScalarProperty Name="BuildingCode" ColumnName="BuildingCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parkings">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.Parking">
+              <MappingFragment StoreEntitySet="Parking">
+                <ScalarProperty Name="fkLocationId" ColumnName="fkLocationId" />
+                <ScalarProperty Name="HandicapCount" ColumnName="HandicapCount" />
+                <ScalarProperty Name="SpaceCount" ColumnName="SpaceCount" />
+                <ScalarProperty Name="ParkingCode" ColumnName="ParkingCode" />
+                <ScalarProperty Name="GeoData" ColumnName="GeoData" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParkingTypes">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.ParkingType">
+              <MappingFragment StoreEntitySet="ParkingType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ParkingParkingType" TypeName="DB_109670_portalModel.ParkingParkingType" StoreEntitySet="ParkingParkingType">
+            <EndProperty Name="ParkingType">
+              <ScalarProperty Name="Name" ColumnName="ParkingTypeName" />
+            </EndProperty>
+            <EndProperty Name="Parking">
+              <ScalarProperty Name="fkLocationId" ColumnName="ParkingId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />
+                <ScalarProperty Name="GeoData" ColumnName="GeoData" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MarkerData" ColumnName="MarkerData" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

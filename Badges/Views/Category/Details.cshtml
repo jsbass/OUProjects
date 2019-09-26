@@ -1,0 +1,17 @@
+﻿@model Badges.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Model.Name</h2>
+@(User.IsInRole("Admin") ? Html.ActionLink("Edit", "Edit", new { id = Model.Id }) : MvcHtmlString.Empty)
+<img src="@(Model.Image?.ImageString)"/>
+<p>@Model.Description</p>
+<table class="table">
+    <tr><th>Name</th><th>Description</th><th>Estimated Hours</th></tr>
+    @foreach (var badge in Model.Badges)
+    {
+        <tr><td>@badge.Name</td><td>@badge.Description</td><td>@badge.EstimatedHours</td></tr>
+    }
+</table>

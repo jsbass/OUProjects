@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNet.Identity
+@model List<Badges.Models.User>
+
+@{
+    ViewBag.Title = "Admin - Users";
+}
+
+<h2>Users</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>User Id</th><th>Name</th><th>Email</th><th>Sooner Id</th><th>OU Net Id</th><th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.UserId</td><td>@user.LastName, @user.FirstName</td><td><a href="mailto:@user.Email">@user.Email</a></td><td>@user.SoonerId</td><td>@user.OuNetId</td><td>@Html.ActionLink("Edit", "Edit", "Account", new { userId = user.UserId}, null) | @(user.UserId == User.Identity.GetUserId() ? MvcHtmlString.Create("Delete") : Html.ActionLink("Delete", "Delete", "Account", new {userId = user.UserId}, null))</td>
+        </tr>
+    }
+    </tbody>
+    @Html.ActionLink("New", "Register", "Account")
+</table>

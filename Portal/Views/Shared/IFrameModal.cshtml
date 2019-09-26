@@ -1,0 +1,82 @@
+﻿@{
+    string url = ViewBag.IFrameUrl;
+}
+
+<div id="iframe-modal" class="hiddenModal">
+    @Scripts.Render("~/Scripts/Modal.js")
+    
+    <style>
+        #iframe-modal {
+            overflow: hidden;
+            position: fixed;
+            top: 10%;
+            bottom: 10%;
+            left: 10%;
+            right: 10%;
+            display: flex;
+            flex-flow: column;
+            border-radius: 10px;
+            background-color: white;
+            border: 1px solid black;
+            box-shadow: 5px 5px 5px black;
+
+            -ms-transition: opacity 2s;
+            -o-transition: opacity 2s;
+            -webkit-transition: opacity 2s;
+            transition: opacity 2s;
+        }
+
+        .hiddenModal {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .bun {
+            padding: 10px;
+            flex: 0 1 50px;
+            background-color: lightgrey;
+        }
+
+        .patty {
+            flex: 1 1 auto;
+        }
+
+        #iframe-header {
+            top: 0px;
+        }
+
+        #iframe-footer {
+
+        }
+
+        #iframe-content {
+            overflow: scroll;
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            /*position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;*/
+        }
+
+    </style>
+    
+    <div class="bun" id="iframe-header">
+        <p style="float: left" id="iframe-title">@url</p>
+        <button style="float: right" type="button" onclick="hideModal()">Close Window</button>
+    </div>
+    <img class="patty" id="modal-loading-image" src="~/Content/Images/loading_charmander.gif" />
+    <iframe name="iframe" class="patty" src="@url" id="iframe-content" onload="checkIFrame(this)">
+        Your Browser Does Not Support IFrames :(
+    </iframe>
+    <div class="bun" id="iframe-footer">
+    </div>
+    
+    <script>
+        window.url = "@ViewBag.IFrameUrl";
+    </script>
+</div>

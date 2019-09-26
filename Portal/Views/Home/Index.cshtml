@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNet.Identity
+@using Portal.Helpers
+@using Portal.Models.DB
+@using Portal.Models.DB.Auth
+@model List<Portal.Models.DB.Category>
+
+@{
+    ViewBag.Title = "Home Page";
+    var user = (User)ViewBag.User;
+}
+<style>
+    tr:hover {
+        background: lightblue;
+    }
+
+    td > a {
+        display: block;
+        padding: 10px;
+    }
+
+        td > a:hover {
+            text-decoration: none;
+        }
+</style>
+@if (Request.IsAuthenticated)
+{
+    <p>Hello, @user.FirstName @user.LastName</p>
+    <p>@user.UserId</p>
+}
+<div class="row" style="margin:15px;"></div>
+
+@foreach (var category in Model)
+{
+    <div class="well well-lg category-well">
+        <div class="well-header" style="text-align:center">@category.Name</div>
+        @foreach (var link in category.LinkCategories.Select(lc => lc.Link))
+        {
+            <div class="link-card col-md-2">
+                @if (link.InNewWindow == null || !link.InNewWindow.Value)
+                    {
+                    <a href="@link.Url" target="_blank">
+                        <div class="row container link-container">
+                            @link.Name
+                        </div>
+                        <div class="row container link-container">
+                            @link.Description
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <a href="@link.Url" target="iframe" onclick="showModal()">
+                        <div class="row container link-container">
+                            @link.Name
+                        </div>
+                        <div class="row container link-container">
+                            @link.Description
+                        </div>
+                    </a>
+                }
+
+            </div>
+        }
+    </div>
+}
+
+
+@Html.Partial("IFrameModal")

@@ -1,0 +1,185 @@
+﻿@font-face {
+    font-family: 'icomoon';
+    src: url('../fonts/icomoon.eot?jfal0w');
+    src: url('../fonts/icomoon.eot?jfal0w#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?jfal0w') format('truetype'), url('../fonts/icomoon.woff?jfal0w') format('woff'), url('../fonts/icomoon.svg?jfal0w#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-OU-Logo:before {
+    content: "\e900";
+}
+
+body, html {
+    min-height: 100%;
+    height: 100%;
+    width: 100%;
+}
+
+/* Set padding to keep content from hitting the edges */
+#body-container {
+    padding-top: 50px;
+    width: 100%;
+    height: 100%;
+}
+
+#body-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#header {
+    height: 50px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+#snackbar {
+    visibility: hidden;
+    bottom: 30px;
+    left: 50%;
+    min-width: 250px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    -ms-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+    #snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        -moz-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        -o-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+.link-card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border: solid 3px black;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.link-card > a{
+    text-decoration: none;
+    color: black;
+}
+    .link-card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.6);
+
+    }
+
+    .link-container{
+        text-align: center;
+    }
+
+    .category-well{
+        overflow:auto;
+        background-color: darkgray;
+    }
+
+@-moz-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}

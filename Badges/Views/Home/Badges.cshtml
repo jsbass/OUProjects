@@ -1,0 +1,24 @@
+﻿@model List<Badges.Models.Category>
+@{
+    ViewBag.Title = "Badges";
+}
+
+<h2>Badges</h2>
+
+@foreach (var category in Model)
+{
+    <div class="col-sm-3" data-id="@category.Id">
+        <div class="card">
+            <div class="card-top">
+                <div class="card-img">
+                    <img src="@(category.Image?.ImageString ?? Url.Content("~/Content/Images/NA.jpg"))" alt="@category.Name Image"/>
+                </div>
+                <h3>@category.Name</h3>
+                <p>@category.Description</p>
+            </div>
+            <a href="@Url.Action("Category", "Home", new { id = category.Id })" class="card-bottom">
+                View Category <span class="glyphicon glyphicon-arrow-right"></span>
+            </a>
+        </div>
+    </div>
+}

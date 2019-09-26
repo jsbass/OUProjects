@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b9e26ecb9e5d45549e8125caae52fdc2" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_109670_portalModel.CalendarGroup" Width="1.5" PointX="2.875" PointY="0.875" />
+        <EntityTypeShape EntityType="DB_109670_portalModel.CalendarSource" Width="1.5" PointX="2.875" PointY="3.5" />
+        <EntityTypeShape EntityType="DB_109670_portalModel.CalendarEvent" Width="1.5" PointX="5.5" PointY="0.875" />
+        <AssociationConnector Association="DB_109670_portalModel.FK_CalendarEvent_CalendarGroup" />
+        <AssociationConnector Association="DB_109670_portalModel.FK_CalendarGroup_CalendarSource" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

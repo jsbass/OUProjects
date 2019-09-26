@@ -1,0 +1,24 @@
+﻿@model Badges.Models.Badge
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<div class="badge-container">
+    <img src="@(Model.Image?.ImageString ?? Url.Content("~/Content/Images/NA.jpg"))" alt="@Model.Name Image"/>
+    <h2>@Model.Name</h2>
+    <p>@Model.Description</p>
+
+    <div class="requirement-container">
+        <h3>Requirements</h3>
+        <ul>
+            @foreach (var req in Model.Requirements)
+            {
+                <li>
+                    @req.Text
+                </li>
+            }
+        </ul>
+        
+    </div>
+</div>

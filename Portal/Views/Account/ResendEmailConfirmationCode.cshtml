@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "ResendEmailConfirmationCode";
+}
+
+<h2>Trouble Finding Code in Email?</h2>
+
+@using (Html.BeginForm())
+{
+    <p>Resend Confirmation Token</p>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    @Html.EditorForModel()
+
+    <button type="submit" name="submit">Submit</button>
+}
+
+@Html.ActionLink("Go back to login", "Login","Account")

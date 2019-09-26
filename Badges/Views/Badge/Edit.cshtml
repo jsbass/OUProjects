@@ -1,0 +1,274 @@
+﻿@model Badges.Models.PostModels.Badges.EditBadge
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Badge</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EstimatedHours, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EstimatedHours, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EstimatedHours, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImageSource, htmlAttributes: new { @class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.ImageSource)
+                <button type="button" onclick="showDialog(this.previousElementSibling, this.nextElementSibling)">Import Image</button>
+                <img src="@Model.ImageSource"/>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Requirements, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" id="requirements-container">
+                @for (var i = 0; i < Model.Requirements.Count; i++)
+                {
+                    <div class="requirement container-fluid">
+                        <input type="hidden" name="Requirements[@i].Id" id="Requirements[@i].Id" value="@Model.Requirements[i].Id" />
+                        <div class="form-group">
+                            <label class="control-label col-md-1" for="Requirements[@i].Text">Text</label>
+                            <div class="col-md-11">
+                                <input class="form-control text-box single-line" id="Requirements[@i].Text" name="Requirements[@i].Text" type="text" value="@Model.Requirements[i].Text" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Requirements[@i].Text" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1" for="Requirements[@i].Url">Url</label>
+                            <div class="col-md-11">
+                                <input class="form-control text-box single-line" id="Requirements[@i].Url" name="Requirements[@i].Url" type="text" value="@Model.Requirements[i].Url" oninput="processParams(this.parentElement.parentElement.nextElementSibling.children[1], this.value, @i)" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Requirements[@i].Url" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-lavel col-md-1" for="Requirements[@i].Params">Params</label>
+                            <div class="col-md-11">
+                                @for (var j = 0; j < Model.Requirements[i].Params.Count; j++)
+                                {
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <input readonly="readonly" class="form-control text-box single-line" id="Requirements[@i].Params[@j].Name" name="Requirements[@i].Params[@j].Name" type="text" value="@Model.Requirements[i].Params[j].Name" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control text-box single-line" id="Requirements[@i].Params[@j].Value" name="Requirements[@i].Params[@j].Value" type="text" value="@Model.Requirements[i].Params[j].Value" placeholder="value"/>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="delete-req" onclick="deleteItem(this)"><span>X</span></div>
+                    </div>
+                }
+                <a href="#" onclick="this.parentElement.insertBefore(generateRequirementElement(this.parentElement.children.length - 1), this)">Add New Requirement</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section styles{
+    <style>
+        
+         .requirement {
+             position: relative;
+             background-color: darkgray;
+             border-radius: 10px;
+             padding: 10px;
+         }
+
+         .requirement ~ .requirement {
+             margin-top: 10px;
+         }
+
+        .delete-req {
+            margin: 0;
+            padding: 5px;
+            position: absolute;
+            background-color: firebrick;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            width: 40px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .delete-req > span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+}
+@section scripts{
+    <script>
+        function msieversion(){
+            var ua = window.navigator.userAgent;
+            var msie = ua.indexOf("MSIE ");
+            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)){
+                return(parseInt(ua.substring(msie + 5, ua.indexOf(".", msie))));
+            }else{
+                return false;
+            }
+        }
+        var showDialog = function(inputElem, imgElem) {
+                URL = 'https://www.openbadges.me/designer.html?origin=@(Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, string.Empty))';
+                URL = URL + '&email=bass@ou.edu';
+                URL = URL + '&close=true';
+                options = 'width=1200,height=680,location=0,menubar=0,status=0,toolbar=0';
+                if (!msieversion()) {
+                    var designerWindow = window.open(URL, '', options);
+                } else {
+                    window.alert("Sorry, Internet Explorer is not supported by OpenBadges.me");
+                }
+
+            window.onmessage = function (e) {
+                if (e.origin == 'https://www.openbadges.me') {
+                    if (e.data != 'cancelled') {
+                        // handle the additional GUID, if one exists
+                        i = e.data.toString();
+                        i = i.split(';');
+                        // set the target image to display the Base64 content
+                        inputElem.value = i[0] + ';' + i[1];
+                        imgElem.src = i[0] + ';' + i[1];
+                    }
+                }
+            };
+        }
+                        var generateRequirementElement = function (i) {
+                            var temp = document.createElement('div');
+                            temp.innerHTML = `<div class="requirement container-fluid">
+                        <div class="form-group">
+                            <label class="control-label col-md-1" for="Requirements[${i}].Text">Text</label>
+                            <div class="col-md-11">
+                                <input class="form-control text-box single-line" id="Requirements[${i
+                            }].Text" name="Requirements[${i}].Text" type="text" value=""/>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Requirements[${i
+                            }].Text" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1" for="Requirements[${i}].Url">Url</label>
+                            <div class="col-md-11">
+                                <input class="form-control text-box single-line" id="Requirements[${i
+                            }].Url" name="Requirements[${i
+                            }].Url" type="text" value="" oninput="processParams(this.parentElement.parentElement.nextElementSibling.children[1], this.value, ${i})"/>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Requirements[${i
+                            }].Url" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-lavel col-md-1" for="Requirements[${i}].Params">Params</label>
+                            <div class="col-md-10">
+                            </div>
+                        </div>
+                        <div class="delete-req" onclick="deleteItem(this)"><span>X</span></div>
+                    </div>`;
+                            return temp.children[0];
+                        }
+
+                        var generateParamElement = function (i, j, name, value) {
+                            var temp = document.createElement('div');
+                            temp.innerHTML = `<div class="form-inline">
+                                        <div class="form-group">
+                                            <input readonly="readonly" class="form-control text-box single-line" id="Requirements[${i}].Params[${j}].Name" name="Requirements[${i}].Params[${j}].Name" type="text" value="${name}" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control text-box single-line" id="Requirements[${i}].Params[${j}].Value" name="Requirements[${i}].Params[${j}].Value" type="text" value="${value}" placeholder="value"/>
+                                        </div>
+                                    </div>`;
+                            return temp.children[0];
+                        }
+
+                        var deleteItem = function (elem) {
+                            console.log(elem, elem.parentElement);
+                            elem.parentElement.parentElement.removeChild(elem.parentElement);
+                        }
+
+                        var processParams = function (parent, url, i) {
+                            var oldParams = Array.from(parent.children).filter(function (elem) {
+                                return elem.classList.contains('param-container');
+                            }).map(function (elem) {
+                                var inputs = elem.getElementsByTagName('input');
+                                return {
+                                    name: inputs[0].value,
+                                    value: inputs[1].value
+                                };
+                            });
+                            //clear parent
+                            while (parent.firstChild) {
+                                parent.removeChild(parent.firstChild);
+                            }
+
+                            //find all {params}
+                            var regex = /{([^}]+)}/g;
+                            var params = [];
+                            var curMatch = "";
+                            while (curMatch = regex.exec(url)) {
+                                if (params.indexOf(curMatch[1]) === -1) {
+                                    params.push(curMatch[1]);
+                                }
+                            }
+
+                            //filter out constants
+                            params = params.filter(function (p) {
+                                return constants.indexOf(p) === -1;
+                            });
+
+                            for (var j = 0; j < params.length; j++) {
+                                //check old params for existing values
+                                var value = "";
+                                for (var k = 0; k < oldParams.length; k++) {
+                                    if (oldParams[k].name === params[j]) {
+                                        value = oldParams[k].value;
+                                    }
+                                }
+                                //add param
+                                parent.appendChild(generateParamElement(i, j, params[j], value));
+                            }
+                        };
+
+                        var constants = [
+                            "soonerId",
+                            "ouNetId"
+                        ];
+    </script>
+}

@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_109670_portalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_109670_portal.dbo.CalendarEvent' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CalendarEvent">
+          <Key>
+            <PropertyRef Name="fkGroupId" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="EndTime" />
+            <PropertyRef Name="EventIdFromSource" />
+          </Key>
+          <Property Name="fkGroupId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+          <Property Name="Url" Type="varchar" MaxLength="100" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="Contact" Type="varchar" MaxLength="50" />
+          <Property Name="ContactEmail" Type="varchar" MaxLength="50" />
+          <Property Name="Location" Type="varchar" MaxLength="50" />
+          <Property Name="EventIdFromSource" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CalendarGroup">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GroupIdFromSource" Type="int" />
+          <Property Name="fkSourceId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CalendarSource">
+          <Key>
+            <PropertyRef Name="SourceId" />
+          </Key>
+          <Property Name="SourceId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <Association Name="FK_CalendarEvent_CalendarGroup">
+          <End Role="CalendarGroup" Type="Self.CalendarGroup" Multiplicity="1" />
+          <End Role="CalendarEvent" Type="Self.CalendarEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CalendarGroup">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="CalendarEvent">
+              <PropertyRef Name="fkGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CalendarGroup_CalendarSource">
+          <End Role="CalendarSource" Type="Self.CalendarSource" Multiplicity="1" />
+          <End Role="CalendarGroup" Type="Self.CalendarGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CalendarSource">
+              <PropertyRef Name="SourceId" />
+            </Principal>
+            <Dependent Role="CalendarGroup">
+              <PropertyRef Name="fkSourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_109670_portalModelStoreContainer">
+          <EntitySet Name="CalendarGroup" EntityType="Self.CalendarGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CalendarSource" EntityType="Self.CalendarSource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CalendarEvent" EntityType="Self.CalendarEvent" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CalendarEvent].[fkGroupId] AS [fkGroupId], 
+    [CalendarEvent].[Title] AS [Title], 
+    [CalendarEvent].[Description] AS [Description], 
+    [CalendarEvent].[Url] AS [Url], 
+    [CalendarEvent].[StartTime] AS [StartTime], 
+    [CalendarEvent].[EndTime] AS [EndTime], 
+    [CalendarEvent].[Contact] AS [Contact], 
+    [CalendarEvent].[ContactEmail] AS [ContactEmail], 
+    [CalendarEvent].[Location] AS [Location], 
+    [CalendarEvent].[EventIdFromSource] AS [EventIdFromSource]
+    FROM [dbo].[CalendarEvent] AS [CalendarEvent]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CalendarEvent_CalendarGroup" Association="Self.FK_CalendarEvent_CalendarGroup">
+            <End Role="CalendarGroup" EntitySet="CalendarGroup" />
+            <End Role="CalendarEvent" EntitySet="CalendarEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CalendarGroup_CalendarSource" Association="Self.FK_CalendarGroup_CalendarSource">
+            <End Role="CalendarSource" EntitySet="CalendarSource" />
+            <End Role="CalendarGroup" EntitySet="CalendarGroup" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_109670_portalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DB_109670_portalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CalendarGroups" EntityType="DB_109670_portalModel.CalendarGroup" />
+          <EntitySet Name="CalendarSources" EntityType="DB_109670_portalModel.CalendarSource" />
+          <EntitySet Name="CalendarEvents" EntityType="DB_109670_portalModel.CalendarEvent" />
+          <AssociationSet Name="FK_CalendarEvent_CalendarGroup" Association="DB_109670_portalModel.FK_CalendarEvent_CalendarGroup">
+            <End Role="CalendarGroup" EntitySet="CalendarGroups" />
+            <End Role="CalendarEvent" EntitySet="CalendarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CalendarGroup_CalendarSource" Association="DB_109670_portalModel.FK_CalendarGroup_CalendarSource">
+            <End Role="CalendarSource" EntitySet="CalendarSources" />
+            <End Role="CalendarGroup" EntitySet="CalendarGroups" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CalendarGroup">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GroupIdFromSource" Type="Int32" />
+          <NavigationProperty Name="CalendarEvents" Relationship="DB_109670_portalModel.FK_CalendarEvent_CalendarGroup" FromRole="CalendarGroup" ToRole="CalendarEvent" />
+          <Property Name="fkSourceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CalendarSource" Relationship="DB_109670_portalModel.FK_CalendarGroup_CalendarSource" FromRole="CalendarGroup" ToRole="CalendarSource" />
+        </EntityType>
+        <EntityType Name="CalendarSource">
+          <Key>
+            <PropertyRef Name="SourceId" />
+          </Key>
+          <Property Name="SourceId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CalendarGroups" Relationship="DB_109670_portalModel.FK_CalendarGroup_CalendarSource" FromRole="CalendarSource" ToRole="CalendarGroup" />
+        </EntityType>
+        <EntityType Name="CalendarEvent">
+          <Key>
+            <PropertyRef Name="fkGroupId" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="EndTime" />
+            <PropertyRef Name="EventIdFromSource" />
+          </Key>
+          <Property Name="fkGroupId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventIdFromSource" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CalendarGroup" Relationship="DB_109670_portalModel.FK_CalendarEvent_CalendarGroup" FromRole="CalendarEvent" ToRole="CalendarGroup" />
+        </EntityType>
+        <Association Name="FK_CalendarEvent_CalendarGroup">
+          <End Type="DB_109670_portalModel.CalendarGroup" Role="CalendarGroup" Multiplicity="1" />
+          <End Type="DB_109670_portalModel.CalendarEvent" Role="CalendarEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CalendarGroup">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="CalendarEvent">
+              <PropertyRef Name="fkGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CalendarGroup_CalendarSource">
+          <End Type="DB_109670_portalModel.CalendarSource" Role="CalendarSource" Multiplicity="1" />
+          <End Type="DB_109670_portalModel.CalendarGroup" Role="CalendarGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CalendarSource">
+              <PropertyRef Name="SourceId" />
+            </Principal>
+            <Dependent Role="CalendarGroup">
+              <PropertyRef Name="fkSourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_109670_portalModelStoreContainer" CdmEntityContainer="DB_109670_portalEntities">
+          <EntitySetMapping Name="CalendarGroups">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.CalendarGroup">
+              <MappingFragment StoreEntitySet="CalendarGroup">
+                <ScalarProperty Name="fkSourceId" ColumnName="fkSourceId" />
+                <ScalarProperty Name="GroupIdFromSource" ColumnName="GroupIdFromSource" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CalendarSources">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.CalendarSource">
+              <MappingFragment StoreEntitySet="CalendarSource">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CalendarEvents">
+            <EntityTypeMapping TypeName="DB_109670_portalModel.CalendarEvent">
+              <MappingFragment StoreEntitySet="CalendarEvent">
+                <ScalarProperty Name="EventIdFromSource" ColumnName="EventIdFromSource" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="fkGroupId" ColumnName="fkGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

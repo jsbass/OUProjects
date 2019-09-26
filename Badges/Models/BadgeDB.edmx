@@ -1,0 +1,923 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_109670_badgeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Badge">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="EstimatedHours" Type="int" />
+          <Property Name="ImageId" Type="int" />
+        </EntityType>
+        <EntityType Name="BadgeCategory">
+          <Key>
+            <PropertyRef Name="BadgeId" />
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="BadgeId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BadgeStatus">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="BadgeId" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="BadgeId" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="CompletionDate" Type="datetime" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="ImageId" Type="int" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageData" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Value" Type="varchar" MaxLength="50" />
+          <Property Name="RequirementId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Requirement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UrlForStatus" Type="varchar" MaxLength="250" />
+          <Property Name="BadgeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="OuNetId" Type="char" MaxLength="8" />
+          <Property Name="SoonerId" Type="char" MaxLength="9" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="30" />
+          <Property Name="LastName" Type="varchar" MaxLength="30" />
+          <Property Name="PasswordHash" Type="varchar" MaxLength="72" Nullable="false" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="SecurityStamp" Type="varchar" MaxLength="72" />
+        </EntityType>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="ClaimType" Type="varchar(max)" />
+          <Property Name="ClaimValue" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="UserRequirement">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RequirementId" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="RequirementId" Type="int" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+          <Property Name="IsCompleted" Type="bit" Nullable="false" />
+          <Property Name="StatusText" Type="varchar" MaxLength="30" />
+          <Property Name="PercentCompleted" Type="decimal" Precision="5" Scale="4" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Badge_Image">
+          <End Role="Image" Type="Self.Image" Multiplicity="0..1" />
+          <End Role="Badge" Type="Self.Badge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Badge">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BadgeCategory_Badge">
+          <End Role="Badge" Type="Self.Badge" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BadgeCategory" Type="Self.BadgeCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Badge">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BadgeCategory">
+              <PropertyRef Name="BadgeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BadgeCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BadgeCategory" Type="Self.BadgeCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BadgeCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BadgeStatus_Badge">
+          <End Role="Badge" Type="Self.Badge" Multiplicity="1" />
+          <End Role="BadgeStatus" Type="Self.BadgeStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Badge">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BadgeStatus">
+              <PropertyRef Name="BadgeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BadgeStatus_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="BadgeStatus" Type="Self.BadgeStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BadgeStatus">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BadgeStatus_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="BadgeStatus" Type="Self.BadgeStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BadgeStatus">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_Image">
+          <End Role="Image" Type="Self.Image" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parameter_Requirement">
+          <End Role="Requirement" Type="Self.Requirement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Parameter" Type="Self.Parameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requirement">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parameter">
+              <PropertyRef Name="RequirementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requirement_Badge">
+          <End Role="Badge" Type="Self.Badge" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Requirement" Type="Self.Requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Badge">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requirement">
+              <PropertyRef Name="BadgeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Status_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Status" Type="Self.Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Status">
+              <PropertyRef Name="CreatedByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaim_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserClaim" Type="Self.UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRequirement_Requirement">
+          <End Role="Requirement" Type="Self.Requirement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserRequirement" Type="Self.UserRequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requirement">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRequirement">
+              <PropertyRef Name="RequirementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRequirement_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserRequirement" Type="Self.UserRequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRequirement">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_109670_badgeModelStoreContainer">
+          <EntitySet Name="Badge" EntityType="Self.Badge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BadgeCategory" EntityType="Self.BadgeCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BadgeStatus" EntityType="Self.BadgeStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parameter" EntityType="Self.Parameter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requirement" EntityType="Self.Requirement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserClaim" EntityType="Self.UserClaim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRequirement" EntityType="Self.UserRequirement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Badge_Image" Association="Self.FK_Badge_Image">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Badge" EntitySet="Badge" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BadgeCategory_Badge" Association="Self.FK_BadgeCategory_Badge">
+            <End Role="Badge" EntitySet="Badge" />
+            <End Role="BadgeCategory" EntitySet="BadgeCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BadgeCategory_Category" Association="Self.FK_BadgeCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="BadgeCategory" EntitySet="BadgeCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BadgeStatus_Badge" Association="Self.FK_BadgeStatus_Badge">
+            <End Role="Badge" EntitySet="Badge" />
+            <End Role="BadgeStatus" EntitySet="BadgeStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BadgeStatus_Status" Association="Self.FK_BadgeStatus_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="BadgeStatus" EntitySet="BadgeStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BadgeStatus_User" Association="Self.FK_BadgeStatus_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="BadgeStatus" EntitySet="BadgeStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_Image" Association="Self.FK_Category_Image">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parameter_Requirement" Association="Self.FK_Parameter_Requirement">
+            <End Role="Requirement" EntitySet="Requirement" />
+            <End Role="Parameter" EntitySet="Parameter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requirement_Badge" Association="Self.FK_Requirement_Badge">
+            <End Role="Badge" EntitySet="Badge" />
+            <End Role="Requirement" EntitySet="Requirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Status_User" Association="Self.FK_Status_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Status" EntitySet="Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaim_User" Association="Self.FK_UserClaim_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserClaim" EntitySet="UserClaim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRequirement_Requirement" Association="Self.FK_UserRequirement_Requirement">
+            <End Role="Requirement" EntitySet="Requirement" />
+            <End Role="UserRequirement" EntitySet="UserRequirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRequirement_User" Association="Self.FK_UserRequirement_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserRequirement" EntitySet="UserRequirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_109670_badgeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BadgeDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Badges" EntityType="DB_109670_badgeModel.Badge" />
+          <EntitySet Name="BadgeStatus" EntityType="DB_109670_badgeModel.BadgeStatu" />
+          <EntitySet Name="Categories" EntityType="DB_109670_badgeModel.Category" />
+          <EntitySet Name="Images" EntityType="DB_109670_badgeModel.Image" />
+          <EntitySet Name="Parameters" EntityType="DB_109670_badgeModel.Parameter" />
+          <EntitySet Name="Requirements" EntityType="DB_109670_badgeModel.Requirement" />
+          <EntitySet Name="Roles" EntityType="DB_109670_badgeModel.Role" />
+          <EntitySet Name="Status" EntityType="DB_109670_badgeModel.Status" />
+          <EntitySet Name="Users" EntityType="DB_109670_badgeModel.User" />
+          <EntitySet Name="UserClaims" EntityType="DB_109670_badgeModel.UserClaim" />
+          <EntitySet Name="UserRequirements" EntityType="DB_109670_badgeModel.UserRequirement" />
+          <AssociationSet Name="FK_Badge_Image" Association="DB_109670_badgeModel.FK_Badge_Image">
+            <End Role="Image" EntitySet="Images" />
+            <End Role="Badge" EntitySet="Badges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BadgeStatus_Badge" Association="DB_109670_badgeModel.FK_BadgeStatus_Badge">
+            <End Role="Badge" EntitySet="Badges" />
+            <End Role="BadgeStatu" EntitySet="BadgeStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requirement_Badge" Association="DB_109670_badgeModel.FK_Requirement_Badge">
+            <End Role="Badge" EntitySet="Badges" />
+            <End Role="Requirement" EntitySet="Requirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BadgeStatus_Status" Association="DB_109670_badgeModel.FK_BadgeStatus_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="BadgeStatu" EntitySet="BadgeStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BadgeStatus_User" Association="DB_109670_badgeModel.FK_BadgeStatus_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BadgeStatu" EntitySet="BadgeStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_Image" Association="DB_109670_badgeModel.FK_Category_Image">
+            <End Role="Image" EntitySet="Images" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parameter_Requirement" Association="DB_109670_badgeModel.FK_Parameter_Requirement">
+            <End Role="Requirement" EntitySet="Requirements" />
+            <End Role="Parameter" EntitySet="Parameters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRequirement_Requirement" Association="DB_109670_badgeModel.FK_UserRequirement_Requirement">
+            <End Role="Requirement" EntitySet="Requirements" />
+            <End Role="UserRequirement" EntitySet="UserRequirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Status_User" Association="DB_109670_badgeModel.FK_Status_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Status" EntitySet="Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaim_User" Association="DB_109670_badgeModel.FK_UserClaim_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserClaim" EntitySet="UserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRequirement_User" Association="DB_109670_badgeModel.FK_UserRequirement_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserRequirement" EntitySet="UserRequirements" />
+          </AssociationSet>
+          <AssociationSet Name="BadgeCategory" Association="DB_109670_badgeModel.BadgeCategory">
+            <End Role="Badge" EntitySet="Badges" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="UserRole" Association="DB_109670_badgeModel.UserRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Badge">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EstimatedHours" Type="Int32" />
+          <Property Name="ImageId" Type="Int32" />
+          <NavigationProperty Name="Image" Relationship="DB_109670_badgeModel.FK_Badge_Image" FromRole="Badge" ToRole="Image" />
+          <NavigationProperty Name="BadgeStatus" Relationship="DB_109670_badgeModel.FK_BadgeStatus_Badge" FromRole="Badge" ToRole="BadgeStatu" />
+          <NavigationProperty Name="Requirements" Relationship="DB_109670_badgeModel.FK_Requirement_Badge" FromRole="Badge" ToRole="Requirement" />
+          <NavigationProperty Name="Categories" Relationship="DB_109670_badgeModel.BadgeCategory" FromRole="Badge" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="BadgeStatu">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="BadgeId" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="BadgeId" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CompletionDate" Type="DateTime" Precision="3" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Badge" Relationship="DB_109670_badgeModel.FK_BadgeStatus_Badge" FromRole="BadgeStatu" ToRole="Badge" />
+          <NavigationProperty Name="Status" Relationship="DB_109670_badgeModel.FK_BadgeStatus_Status" FromRole="BadgeStatu" ToRole="Status" />
+          <NavigationProperty Name="User" Relationship="DB_109670_badgeModel.FK_BadgeStatus_User" FromRole="BadgeStatu" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ImageId" Type="Int32" />
+          <NavigationProperty Name="Image" Relationship="DB_109670_badgeModel.FK_Category_Image" FromRole="Category" ToRole="Image" />
+          <NavigationProperty Name="Badges" Relationship="DB_109670_badgeModel.BadgeCategory" FromRole="Category" ToRole="Badge" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Badges" Relationship="DB_109670_badgeModel.FK_Badge_Image" FromRole="Image" ToRole="Badge" />
+          <NavigationProperty Name="Categories" Relationship="DB_109670_badgeModel.FK_Category_Image" FromRole="Image" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="Parameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RequirementId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Requirement" Relationship="DB_109670_badgeModel.FK_Parameter_Requirement" FromRole="Parameter" ToRole="Requirement" />
+        </EntityType>
+        <EntityType Name="Requirement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UrlForStatus" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="BadgeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Badge" Relationship="DB_109670_badgeModel.FK_Requirement_Badge" FromRole="Requirement" ToRole="Badge" />
+          <NavigationProperty Name="Parameters" Relationship="DB_109670_badgeModel.FK_Parameter_Requirement" FromRole="Requirement" ToRole="Parameter" />
+          <NavigationProperty Name="UserRequirements" Relationship="DB_109670_badgeModel.FK_UserRequirement_Requirement" FromRole="Requirement" ToRole="UserRequirement" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="DB_109670_badgeModel.UserRole" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedByUserId" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BadgeStatus" Relationship="DB_109670_badgeModel.FK_BadgeStatus_Status" FromRole="Status" ToRole="BadgeStatu" />
+          <NavigationProperty Name="User" Relationship="DB_109670_badgeModel.FK_Status_User" FromRole="Status" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="OuNetId" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="SoonerId" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="72" FixedLength="false" Unicode="false" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="72" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BadgeStatus" Relationship="DB_109670_badgeModel.FK_BadgeStatus_User" FromRole="User" ToRole="BadgeStatu" />
+          <NavigationProperty Name="Status" Relationship="DB_109670_badgeModel.FK_Status_User" FromRole="User" ToRole="Status" />
+          <NavigationProperty Name="UserClaims" Relationship="DB_109670_badgeModel.FK_UserClaim_User" FromRole="User" ToRole="UserClaim" />
+          <NavigationProperty Name="UserRequirements" Relationship="DB_109670_badgeModel.FK_UserRequirement_User" FromRole="User" ToRole="UserRequirement" />
+          <NavigationProperty Name="Roles" Relationship="DB_109670_badgeModel.UserRole" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="DB_109670_badgeModel.FK_UserClaim_User" FromRole="UserClaim" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserRequirement">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RequirementId" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="RequirementId" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
+          <Property Name="StatusText" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PercentCompleted" Type="Decimal" Precision="5" Scale="4" />
+          <NavigationProperty Name="Requirement" Relationship="DB_109670_badgeModel.FK_UserRequirement_Requirement" FromRole="UserRequirement" ToRole="Requirement" />
+          <NavigationProperty Name="User" Relationship="DB_109670_badgeModel.FK_UserRequirement_User" FromRole="UserRequirement" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Badge_Image">
+          <End Type="DB_109670_badgeModel.Image" Role="Image" Multiplicity="0..1" />
+          <End Type="DB_109670_badgeModel.Badge" Role="Badge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Badge">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BadgeStatus_Badge">
+          <End Type="DB_109670_badgeModel.Badge" Role="Badge" Multiplicity="1" />
+          <End Type="DB_109670_badgeModel.BadgeStatu" Role="BadgeStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Badge">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BadgeStatu">
+              <PropertyRef Name="BadgeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requirement_Badge">
+          <End Type="DB_109670_badgeModel.Badge" Role="Badge" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_109670_badgeModel.Requirement" Role="Requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Badge">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requirement">
+              <PropertyRef Name="BadgeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BadgeStatus_Status">
+          <End Type="DB_109670_badgeModel.Status" Role="Status" Multiplicity="1" />
+          <End Type="DB_109670_badgeModel.BadgeStatu" Role="BadgeStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BadgeStatu">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BadgeStatus_User">
+          <End Type="DB_109670_badgeModel.User" Role="User" Multiplicity="1" />
+          <End Type="DB_109670_badgeModel.BadgeStatu" Role="BadgeStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BadgeStatu">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_Image">
+          <End Type="DB_109670_badgeModel.Image" Role="Image" Multiplicity="0..1" />
+          <End Type="DB_109670_badgeModel.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parameter_Requirement">
+          <End Type="DB_109670_badgeModel.Requirement" Role="Requirement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_109670_badgeModel.Parameter" Role="Parameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requirement">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parameter">
+              <PropertyRef Name="RequirementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRequirement_Requirement">
+          <End Type="DB_109670_badgeModel.Requirement" Role="Requirement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_109670_badgeModel.UserRequirement" Role="UserRequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requirement">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRequirement">
+              <PropertyRef Name="RequirementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Status_User">
+          <End Type="DB_109670_badgeModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DB_109670_badgeModel.Status" Role="Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Status">
+              <PropertyRef Name="CreatedByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaim_User">
+          <End Type="DB_109670_badgeModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_109670_badgeModel.UserClaim" Role="UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRequirement_User">
+          <End Type="DB_109670_badgeModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_109670_badgeModel.UserRequirement" Role="UserRequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRequirement">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BadgeCategory">
+          <End Type="DB_109670_badgeModel.Badge" Role="Badge" Multiplicity="*" />
+          <End Type="DB_109670_badgeModel.Category" Role="Category" Multiplicity="*" />
+        </Association>
+        <Association Name="UserRole">
+          <End Type="DB_109670_badgeModel.Role" Role="Role" Multiplicity="*" />
+          <End Type="DB_109670_badgeModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_109670_badgeModelStoreContainer" CdmEntityContainer="BadgeDbContext">
+          <EntitySetMapping Name="Badges">
+            <EntityTypeMapping TypeName="DB_109670_badgeModel.Badge">
+              <MappingFragment StoreEntitySet="Badge">
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="EstimatedHours" ColumnName="EstimatedHours" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BadgeStatus">
+            <EntityTypeMapping TypeName="DB_109670_badgeModel.BadgeStatu">
+              <MappingFragment StoreEntitySet="BadgeStatus">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="BadgeId" ColumnName="BadgeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="DB_109670_badgeModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="DB_109670_badgeModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parameters">
+            <EntityTypeMapping TypeName="DB_109670_badgeModel.Parameter">
+              <MappingFragment StoreEntitySet="Parameter">
+                <ScalarProperty Name="RequirementId" ColumnName="RequirementId" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requirements">
+            <EntityTypeMapping TypeName="DB_109670_badgeModel.Requirement">
+              <MappingFragment StoreEntitySet="Requirement">
+                <ScalarProperty Name="BadgeId" ColumnName="BadgeId" />
+                <ScalarProperty Name="UrlForStatus" ColumnName="UrlForStatus" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="DB_109670_badgeModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="DB_109670_badgeModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DB_109670_badgeModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="SoonerId" ColumnName="SoonerId" />
+                <ScalarProperty Name="OuNetId" ColumnName="OuNetId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserClaims">
+            <EntityTypeMapping TypeName="DB_109670_badgeModel.UserClaim">
+              <MappingFragment StoreEntitySet="UserClaim">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRequirements">
+            <EntityTypeMapping TypeName="DB_109670_badgeModel.UserRequirement">
+              <MappingFragment StoreEntitySet="UserRequirement">
+                <ScalarProperty Name="PercentCompleted" ColumnName="PercentCompleted" />
+                <ScalarProperty Name="StatusText" ColumnName="StatusText" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="RequirementId" ColumnName="RequirementId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="BadgeCategory" TypeName="DB_109670_badgeModel.BadgeCategory" StoreEntitySet="BadgeCategory">
+            <EndProperty Name="Category">
+              <ScalarProperty Name="Id" ColumnName="CategoryId" />
+            </EndProperty>
+            <EndProperty Name="Badge">
+              <ScalarProperty Name="Id" ColumnName="BadgeId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserRole" TypeName="DB_109670_badgeModel.UserRole" StoreEntitySet="UserRole">
+            <EndProperty Name="User">
+              <ScalarProperty Name="UserId" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="Role">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

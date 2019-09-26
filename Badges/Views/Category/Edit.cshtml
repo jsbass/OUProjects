@@ -1,0 +1,100 @@
+﻿@using System.Collections
+@using Badges.Models
+@model Badges.Models.PostModels.Badges.EditCategory
+
+@{
+    ViewBag.Title = "Edit";
+    var badges = (IEnumerable<SelectListItem>) ViewBag.SelectListItems;
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Category</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImageSource, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.ImageSource)
+                <button type="button" onclick="showDialog(this.previousElementSibling, this.nextElementSibling)">Import Image</button>
+                <img src="@Model.ImageSource" />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.BadgeIds, htmlAttributes: new { @class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.ListBoxFor(model => model.BadgeIds, new MultiSelectList(badges, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BadgeIds, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section scripts{
+    <script>
+        function msieversion() {
+            var ua = window.navigator.userAgent;
+            var msie = ua.indexOf("MSIE ");
+            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+                return (parseInt(ua.substring(msie + 5, ua.indexOf(".", msie))));
+            } else {
+                return false;
+            }
+        }
+        var showDialog = function (inputElem, imgElem) {
+            URL = 'https://www.openbadges.me/designer.html?origin=@(Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, string.Empty))';
+            URL = URL + '&email=bass@ou.edu';
+            URL = URL + '&close=true';
+            options = 'width=1200,height=680,location=0,menubar=0,status=0,toolbar=0';
+            if (!msieversion()) {
+                var designerWindow = window.open(URL, '', options);
+            } else {
+                window.alert("Sorry, Internet Explorer is not supported by OpenBadges.me");
+            }
+
+            window.onmessage = function (e) {
+                if (e.origin == 'https://www.openbadges.me') {
+                    if (e.data != 'cancelled') {
+                        // handle the additional GUID, if one exists
+                        i = e.data.toString();
+                        i = i.split(';');
+                        // set the target image to display the Base64 content
+                        inputElem.value = i[0] + ';' + i[1];
+                        imgElem.src = i[0] + ';' + i[1];
+                    }
+                }
+            };
+        }
+    </script>
+}

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Badges.Models.PostModels.Badges.EditParam>
+
+<ul>
+    @foreach (var param in Model)
+    {
+        @Html.LabelFor(model => param.Name)
+        @Html.EditorFor(model => param.Name)
+
+        @Html.LabelFor(model => param.Value)
+        @Html.EditorFor(model => param.Value)
+    }
+</ul>

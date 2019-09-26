@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+@using Portal.Models.DB.Auth
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/snackbar.js")
+    @Scripts.Render("~/Scripts/templates.js")
+    @Scripts.Render("~/Scripts/asteroids.js")
+    @Styles.Render("~/Content/Asteroids.css")
+    @RenderSection("head", required:false)
+</head>
+<body id="body">
+<div id="surprise"></div>
+<div id="header" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Portal", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Map", "Index", "Map")</li>
+                @if (!string.IsNullOrWhiteSpace(User.Identity.Name) && HttpContext.Current.GetOwinContext().GetUserManager<PortalUserManager>().IsInRole(User.Identity.Name, "Admin"))
+                {
+                    <li>@Html.ActionLink("Users", "Users", "Admin")</li>
+                    <li>@Html.ActionLink("Categories", "Categories", "Admin")</li>
+                    <li>@Html.ActionLink("Roles", "Roles", "Admin")</li>
+                }
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+</div>
+<div id="body-container">
+    <div id="body-content">
+        @RenderBody()
+    </div>
+</div>
+@RenderSection("scripts", required: false)
+<script>
+    (function() {
+        var surprise = document.getElementById('surprise');
+        var surpriseClick = function () {
+            console.log('making new game');
+            surprise.onclick = function() {};
+            var div = createAsteroids();
+            var asteroids = new Game(div.getElementsByClassName('asteroids-game')[0]);
+            div.getElementsByClassName('asteroids-close')[0].onclick = function () {
+                console.log('closing');
+                asteroids = null;
+                div.parentElement.removeChild(div);
+                div = null;
+                surprise.onclick = surpriseClick;
+            }
+            document.getElementById('body-content').appendChild(div);
+            asteroids.play();
+        };
+
+        surprise.onclick = surpriseClick;
+    })();
+</script>
+<div id="snackbar"></div>
+</body>
+</html>

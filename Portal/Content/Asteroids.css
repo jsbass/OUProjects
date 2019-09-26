@@ -1,0 +1,50 @@
+﻿.asteroids-window {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    opacity: .75;
+    background-color: gray;
+}
+
+.asteroids-game {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+.asteroids-game > canvas {
+    background-color: white;
+}
+
+.asteroids-close {
+    position: absolute;
+    min-height: 10px;
+    min-width: 10px;
+    max-width: 100px;
+    max-width: 100px;
+    width: 10%;
+    height: 10%;
+    background-color: red;
+    opacity: 0.5;
+    right: 0;
+    top: 0;
+}
+
+#surprise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 5px;
+    height: 5px;
+    background-color: red;
+    z-index: 10000;
+}
+
+#surprise:hover {
+    opacity: 1;
+}

@@ -1,0 +1,30 @@
+﻿@model Badges.Models.Category
+@{
+    ViewBag.Title = $"{Model.Name} - Badges";
+}
+
+<div class="page-top col-xs-12">
+    <img src="@(Model.Image?.ImageString ?? Url.Content("~/Content/Images/NA.jpg"))"/>
+    <h3>@Model.Name</h3>
+    <p>@Model.Description</p>
+</div>
+
+<div class="page-bottom col-xs-12 container-fluid">
+    @foreach (var badge in Model.Badges)
+    {
+        <div class="col-sm-3" data-id="@badge.Id">
+            <div class="card">
+                <div class="card-top">
+                    <div class="card-img">
+                        <img src="@(badge.Image?.ImageString ?? Url.Content("~/Content/Images/NA.jpg"))" alt="@badge.Name Image"/>
+                    </div>
+                    <h3>@badge.Name</h3>
+                    <p>@badge.Description</p>
+                </div>
+                <a href="@Url.Action("Badge", "Home", new { id = badge.Id})" class="card-bottom">
+                    View Badge <span class="glyphicon glyphicon-arrow-right"></span>
+                </a>
+            </div>
+        </div>
+    }
+</div>

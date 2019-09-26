@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7d04ed242aff46b2bfb3321edb0bb11c" Name="Diagram1" ZoomLevel="48">
+        <EntityTypeShape EntityType="DB_109670_badgeModel.Badge" Width="1.5" PointX="2.5" PointY="3.625" />
+        <EntityTypeShape EntityType="DB_109670_badgeModel.BadgeStatu" Width="1.5" PointX="8.75" PointY="5" />
+        <EntityTypeShape EntityType="DB_109670_badgeModel.Category" Width="1.5" PointX="6.75" PointY="3.875" />
+        <EntityTypeShape EntityType="DB_109670_badgeModel.Image" Width="1.5" PointX="4.875" PointY="3.625" />
+        <EntityTypeShape EntityType="DB_109670_badgeModel.Parameter" Width="1.5" PointX="13.125" PointY="2.625" />
+        <EntityTypeShape EntityType="DB_109670_badgeModel.Requirement" Width="1.5" PointX="10.625" PointY="2.25" />
+        <EntityTypeShape EntityType="DB_109670_badgeModel.Role" Width="1.5" PointX="4.5" PointY="8.875" />
+        <EntityTypeShape EntityType="DB_109670_badgeModel.Status" Width="1.5" PointX="8.875" PointY="8.125" />
+        <EntityTypeShape EntityType="DB_109670_badgeModel.User" Width="1.5" PointX="6.5" PointY="7.75" />
+        <EntityTypeShape EntityType="DB_109670_badgeModel.UserClaim" Width="1.5" PointX="6.5" PointY="12.625" />
+        <EntityTypeShape EntityType="DB_109670_badgeModel.UserRequirement" Width="1.5" PointX="11.375" PointY="8.25" />
+        <AssociationConnector Association="DB_109670_badgeModel.FK_Badge_Image" />
+        <AssociationConnector Association="DB_109670_badgeModel.FK_BadgeStatus_Badge" />
+        <AssociationConnector Association="DB_109670_badgeModel.FK_Requirement_Badge" />
+        <AssociationConnector Association="DB_109670_badgeModel.FK_BadgeStatus_Status" />
+        <AssociationConnector Association="DB_109670_badgeModel.FK_BadgeStatus_User" />
+        <AssociationConnector Association="DB_109670_badgeModel.FK_Category_Image" />
+        <AssociationConnector Association="DB_109670_badgeModel.FK_Parameter_Requirement" />
+        <AssociationConnector Association="DB_109670_badgeModel.FK_UserRequirement_Requirement" />
+        <AssociationConnector Association="DB_109670_badgeModel.FK_Status_User" />
+        <AssociationConnector Association="DB_109670_badgeModel.FK_UserClaim_User" />
+        <AssociationConnector Association="DB_109670_badgeModel.FK_UserRequirement_User" />
+        <AssociationConnector Association="DB_109670_badgeModel.BadgeCategory" />
+        <AssociationConnector Association="DB_109670_badgeModel.UserRole" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

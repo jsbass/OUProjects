@@ -1,0 +1,12 @@
+﻿
+@{
+    var url = @ViewBag.IFrameUrl;
+}
+
+<h2>TestModal</h2>
+
+<div style="width: 100%; height: 1000px; background-color: rosybrown;"></div>
+@Html.Partial("IFrameModal")
+<script>
+    showModal('@url');
+</script>

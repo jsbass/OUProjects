@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Badges.Models.PostModels.Badges.EditRequirement>
+
+<ul>
+    @foreach (var req in Model)
+    {
+        <li>
+            @Html.LabelFor(model => req.Text)
+            @Html.EditorFor(model => req.Text)
+    
+            @Html.LabelFor(model => req.Url)
+            @Html.EditorFor(model => req.Url)
+    
+            @Html.LabelFor(model => req.Params)
+            @Html.EditorFor(model => req.Params)
+        </li>
+    }
+</ul>

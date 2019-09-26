@@ -1,0 +1,18 @@
+﻿@model Badges.Models.PostModels.Account.LogInModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        @Html.EditorForModel()
+
+        <button type="submit" name="submit">Submit</button>
+    }
+    @Html.ActionLink("Register", "Register")
+</div>

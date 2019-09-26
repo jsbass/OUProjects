@@ -1,0 +1,23 @@
+﻿@model List<Portal.Models.DB.Role>
+@{
+    ViewBag.Title = "Roles";
+}
+
+<h2>Roles</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th><th>Description</th><th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var role in Model)
+    {
+        <tr>
+            <td>@role.Name</td><td>@role.Description</td><td>Edit | @Html.ActionLink("Delete","DeleteRole", new { roleId = role.RoleId})</td>
+        </tr>
+    }
+    </tbody>
+</table>
+@Html.ActionLink("Add", "AddRole", null, new { @class = "btn btn-default" })

@@ -1,0 +1,29 @@
+﻿@model List<Portal.Models.DB.Category>
+@{
+    ViewBag.Title = "Categories";
+}
+
+<h2>Categories</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>User</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.Name</td>
+                <td>@category.Description</td>
+                <td>@category.User.UserId</td>
+                <td>Edit | Delete</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="btn btn-default">Add</div>

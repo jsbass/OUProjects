@@ -1,0 +1,97 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+html, body {
+    background-color: #f9f9f9;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.card {
+    padding: 0;
+    box-shadow: 0 1px 2px 0 #ebecf0;
+    margin: 0;
+}
+
+.card-img {
+    width: 100%;
+    height: 150px;
+    padding: 0;
+    margin: 0;
+}
+
+.card-img > img {
+    background-color: #fff;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: 0 auto;
+    width: 70%;
+}
+
+.card-top {
+    background-color: #fff;
+    height: 350px;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+}
+
+.card-bottom {
+    color: #1da8ff;
+    background-color: #fafbff;
+    box-shadow: inset 0 1px 0 0 #ebecf0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    cursor: pointer;
+    display: block;
+    padding-left: 10px;
+}
+
+.card-bottom:hover {
+    background-color: 
+    color: #1da8ff;
+    text-decoration: none;
+    outline: 0;
+}
+
+.card-bottom > .glyphicon {
+    transition: .25s ease;
+}
+
+.card-bottom:hover > .glyphicon {
+    margin-left: 5px;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    padding: 10px 20px;
+    background-color: darkgray;
+    color: grey;
+}
+
+footer > * {
+    margin: 0;
+}
+
+.navbar-nav .dropdown-hover:hover > .dropdown-menu{
+    display: block;
+}

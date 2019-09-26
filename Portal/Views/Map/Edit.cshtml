@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+    var locationCode = (string) ViewBag.LocationCode;
+}
+
+<div id="map"></div>
+
+@section head{
+    @Styles.Render("~/Content/MapUtils.css")
+    <style>
+        #map {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top:0;
+        }
+
+        
+    </style>
+}
+
+@section scripts{
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFXQMWdzcAExWLkljzYCnfKOdwwa2mM8E"></script>
+    @Scripts.Render("~/Scripts/templates.js")
+    @Scripts.Render("~/Scripts/Maps/MapUtils.js")
+    <script>
+        var baseUrl = @Html.Raw(Json.Encode(Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~")));
+        var defaultLocCode =@Html.Raw(Json.Encode(locationCode));
+    </script>
+    @*@Scripts.Render("~/Scripts/Maps/Edit.js")*@
+}

@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNet.Identity
+@using Portal.Models.DB
+@model Portal.Models.PostModels.Account.EditModel
+@{
+    ViewBag.Title = "Edit";
+    var roles = (List<Role>)ViewBag.Roles;
+    var isAdmin = (bool)ViewBag.IsAdmin;
+}
+
+<div>
+    @using (Html.BeginForm("Edit", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Edit account</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+            </div>
+        </div>
+        @Html.HiddenFor(m => m.UserId)
+        <div class="form-group">
+            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.FirstName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.LastName, new { @class = "form-control" })
+            </div>
+        </div>
+        if (isAdmin)
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.RoleIds, new { @class = "col-md-2 control-label" })
+                <div class="col-md-8">
+                    @Html.ListBoxFor(m => m.RoleIds,
+                        new MultiSelectList(
+                            roles, "Id", "Name", Model.RoleIds),
+                        new { @class = "form-control" }
+                        )
+                </div>
+                <div class="col-md-2">
+                    <ul>
+                        @foreach (var roleId in Model.RoleIds)
+                        {
+                            <li>@roleId</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+        if (Model.UserId == User.Identity.GetUserId())
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.Password, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPwd, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.ConfirmPwd, new { @class = "form-control" })
+                </div>
+            </div>
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Save Changes" />
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5de613c09f2c4bbbadd830f9b09649bf" Name="Diagram1" ZoomLevel="84">
+        <EntityTypeShape EntityType="DB_109670_portalModel.Category" Width="1.5" PointX="1.75" PointY="1.25" />
+        <EntityTypeShape EntityType="DB_109670_portalModel.Link" Width="1.5" PointX="6" PointY="2.75" />
+        <EntityTypeShape EntityType="DB_109670_portalModel.LinkCategory" Width="1.5" PointX="8.25" PointY="2" />
+        <AssociationConnector Association="DB_109670_portalModel.FK_LinkCategory_Category" />
+        <AssociationConnector Association="DB_109670_portalModel.FK_LinkCategory_Link" />
+        <EntityTypeShape EntityType="DB_109670_portalModel.Role" Width="1.5" PointX="7.875" PointY="5.75" />
+        <EntityTypeShape EntityType="DB_109670_portalModel.Tag" Width="1.5" PointX="6" PointY="0.5" />
+        <AssociationConnector Association="DB_109670_portalModel.LinkTag" ManuallyRouted="true" >
+          <ConnectorPoint PointX="6.7393751135650195" PointY="2.75" />
+          <ConnectorPoint PointX="6.7393751135650195" PointY="2.2879850260416656" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="DB_109670_portalModel.User" Width="1.5" PointX="4.125" PointY="3.875" />
+        <AssociationConnector Association="DB_109670_portalModel.FK_Category_User" />
+        <AssociationConnector Association="DB_109670_portalModel.UserRole" />
+        <EntityTypeShape EntityType="DB_109670_portalModel.UserClaim" Width="1.5" PointX="10.875" PointY="5.625" />
+        <AssociationConnector Association="DB_109670_portalModel.FK_UserClaim_User" />
+        <EntityTypeShape EntityType="DB_109670_portalModel.OuMapDumpBuilding" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="DB_109670_portalModel.OuMapDumpParking" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="DB_109670_portalModel.Building" Width="1.5" PointX="7.625" PointY="12.125" />
+        <EntityTypeShape EntityType="DB_109670_portalModel.Parking" Width="1.5" PointX="7.625" PointY="9.125" />
+        <EntityTypeShape EntityType="DB_109670_portalModel.ParkingType" Width="1.5" PointX="9.875" PointY="9.5" />
+        <AssociationConnector Association="DB_109670_portalModel.ParkingParkingType" />
+        <EntityTypeShape EntityType="DB_109670_portalModel.Location" Width="1.5" PointX="5.375" PointY="10.25" />
+        <AssociationConnector Association="DB_109670_portalModel.FK_Building_Location" />
+        <AssociationConnector Association="DB_109670_portalModel.FK_Parking_Location" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
